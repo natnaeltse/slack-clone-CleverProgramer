@@ -1,29 +1,54 @@
 import './CSS/SidebarOption.css'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+import db from '../firebase'
 
 function SidebarOption({ icon, title, id }) {
+	const history = useHistory()
+	const showChannelMessages = (e, id) => {
+		if (id) {
+			e.stopPropagation()
+			history.push(`/room/${id}`)
+		}
+	}
+
+	const addChannel = (e) => {
+		e.stopPropagation()
+		const channelName = prompt('Please enter the channel name to be created')
+		if (channelName) {
+			db.collection('room').add({ name: channelName })
+		}
+	}
+
 	return (
-		<div className='sidebarOption' id={id}>
+		<div className='sidebarOption' key={id}>
 			{/* if we pass icon value then it's going to render a heading */}
 			{/* when no icon is passed then we are going to render a channel */}
 			{icon ? (
 				title === 'Channels' ? (
-					<div className='sidebarOption__icon'>
+					<p className='sidebarOption__icon channel'>
 						{icon}
-						<p>{title}</p>
-						<i className='fas fa-plus'></i>
-					</div>
+						{title}
+						<i className='fas fa-plus' onClick={(e) => addChannel(e)}></i>
+					</p>
+				) : title === 'Add Channel' ? (
+					<p onClick={(e) => addChannel(e)} className='sidebarOption__icon'>
+						{icon}
+						{title}
+					</p>
 				) : (
-					<div className='sidebarOption__icon'>
+					<p className='sidebarOption__icon'>
 						{icon}
-						<p>{title}</p>
-					</div>
+						{title}
+					</p>
 				)
 			) : (
-				<h3 className='sidebarOption__channel'>
-					<span className='sidebarOption__hash'> # </span>
+				<p
+					onClick={(e) => showChannelMessages(e, id)}
+					className='sidebarOption__channel'>
+					<i className='fas fa-hashtag'></i>
 					{title}
-				</h3>
+				</p>
 			)}
 		</div>
 	)

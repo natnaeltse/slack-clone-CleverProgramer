@@ -1,24 +1,34 @@
 import './CSS/App.css'
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import Chat from './Chat'
+import Login from './Login'
 
 function App() {
+	const [user, setUser] = useState('Naty')
 	return (
 		<Router>
-			<Header />
-			<div className='app__body'>
-				<Switch>
-					<Route path='/' exact>
+			{!user ? (
+				<Login />
+			) : (
+				<>
+					<Header />
+					<div className='app__body'>
 						<Sidebar />
-					</Route>
+						<Switch>
+							<Route path='/' exact></Route>
 
-					<Router path='/room' exact></Router>
+							<Route path='/room' exact></Route>
 
-					<Router path='/room/:roomId' exact></Router>
-				</Switch>
-			</div>
+							<Route path='/room/:roomId' exact>
+								<Chat />
+							</Route>
+						</Switch>
+					</div>
+				</>
+			)}
 		</Router>
 	)
 }

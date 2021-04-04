@@ -7,16 +7,18 @@ function Sidebar() {
 	const [channels, setChannels] = useState([])
 
 	useEffect(() => {
-		db.collection('room').onSnapshot((snapshot) => {
-			setChannels(
-				snapshot.docs.map((doc) => {
-					return {
-						id: doc.id,
-						name: doc.data().name,
-					}
-				})
-			)
-		})
+		db.collection('room')
+			.orderBy('name', 'asc')
+			.onSnapshot((snapshot) => {
+				setChannels(
+					snapshot.docs.map((doc) => {
+						return {
+							id: doc.id,
+							name: doc.data().name,
+						}
+					})
+				)
+			})
 	}, [])
 
 	const channelsListDisplay = () => {
@@ -62,7 +64,7 @@ function Sidebar() {
 				title='Saved Items'
 			/>
 			<SidebarOption
-				icon={<i className='fas fa-award'></i>}
+				icon={<i className='fas fa-inbox'></i>}
 				title='Channel Browser'
 			/>
 			<SidebarOption
@@ -89,9 +91,10 @@ function Sidebar() {
 			<hr />
 
 			{channelsListDisplay()}
-			{/* <SidebarOption title='YouTube' /> */}
-			{/* <SidebarOption title='YouTube' />
-			<SidebarOption title='YouTube' /> */}
+			<SidebarOption
+				icon={<i className='fas fa-plus addChannel'></i>}
+				title='Add Channel'
+			/>
 		</div>
 	)
 }
