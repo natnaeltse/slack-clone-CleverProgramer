@@ -1,8 +1,28 @@
 import './CSS/Login.css'
 import React from 'react'
-// import { auth } from '../firestore'
+import { auth, gProvider } from '../firebase'
+import { useStateValue } from '../context'
+import { SET_USER } from '../context/reducer'
 
 function Login() {
+	const [state, dispatch] = useStateValue()
+	const gSignIn = () => {
+		auth
+			.signInWithPopup(gProvider)
+			.then((res) => {
+				console.log(res)
+				dispatch({
+					type: SET_USER,
+					user: res.user,
+				})
+			})
+			.catch((err) => alert(err.message))
+	}
+
+	const emailSignIn = (e) => {
+		e.preventDefault()
+	}
+
 	return (
 		<div className='login'>
 			<div className='login__card'>
@@ -14,7 +34,7 @@ function Login() {
 				<p>
 					We suggest using the <strong>email address you use at work.</strong>
 				</p>
-				<button onClick=''>
+				<button onClick={gSignIn}>
 					<svg
 						version='1.1'
 						xmlns='http://www.w3.org/2000/svg'
@@ -41,12 +61,14 @@ function Login() {
 				<div className='hr'>
 					<hr /> <p>OR</p> <hr />
 				</div>
-				<form onSubmit='' className='login__form'>
-					<input type='text' placeholder='name@work-email.com' />
-					<input type='password' placeholder='Your Password' />
-					<button type='submit' onClick=''>
-						Sign In with Email
-					</button>
+				<form onSubmit={(e) => emailSignIn(e)} className='login__form'>
+					<input
+						name='userName'
+						type='text'
+						placeholder='name@work-email.com'
+					/>
+					<input name='password' type='password' placeholder='Your Password' />
+					<button type='submit'>Sign In with Email</button>
 				</form>
 			</div>
 		</div>

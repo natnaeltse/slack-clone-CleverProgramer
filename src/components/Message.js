@@ -1,7 +1,7 @@
 import './CSS/Message.css'
 import React from 'react'
 
-function Message({ title, body, user, userImage, time }) {
+function Message({ message, user, userImage, time }) {
 	return (
 		<div className='message'>
 			<img src={userImage} alt='' />
@@ -9,8 +9,7 @@ function Message({ title, body, user, userImage, time }) {
 				<h4>
 					{user} <span>{new Date(time?.toDate()).toDateString()}</span>
 				</h4>
-				<p>{title}</p>
-				<p>{body}</p>
+				<p>{message}</p>
 			</div>
 		</div>
 	)

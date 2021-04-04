@@ -5,9 +5,11 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 import Chat from './Chat'
 import Login from './Login'
+import { useStateValue } from '../context'
 
 function App() {
-	const [user, setUser] = useState('Naty')
+	const [{ user }, dispatch] = useStateValue()
+
 	return (
 		<Router>
 			{!user ? (

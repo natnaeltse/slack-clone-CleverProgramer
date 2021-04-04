@@ -2,9 +2,11 @@ import './CSS/Sidebar.css'
 import React, { useState, useEffect } from 'react'
 import SidebarOption from './SidebarOption'
 import db from '../firebase'
+import { useStateValue } from '../context'
 
 function Sidebar() {
 	const [channels, setChannels] = useState([])
+	const [{ user }] = useStateValue()
 
 	useEffect(() => {
 		db.collection('room')
@@ -39,11 +41,8 @@ function Sidebar() {
 						</pre>
 					</h4>
 					<div className='online'></div>
-					<p>Naty</p>
-					<img
-						src='https://images.unsplash.com/photo-1616877249878-25e73f6b433f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80'
-						alt=''
-					/>
+					<p>{user?.displayName}</p>
+					<img src={user?.photoURL} alt={user?.displayName} />
 				</div>
 
 				<div className='sidebar__notepad'>

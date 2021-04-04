@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import db from '../firebase'
 import Message from './Message'
+import ChatInput from './ChatInput'
 
 function Chat() {
 	const { roomId } = useParams()
@@ -42,16 +43,18 @@ function Chat() {
 			</div>
 
 			<div className='chat__messages'>
-				{messages?.map(({ title, body, user, userImage, time }) => (
+				{messages?.map(({ message, user, userImage, time }) => (
 					<Message
-						title={title}
-						body={body}
+						key={time}
+						message={message}
 						user={user}
 						userImage={userImage}
 						time={time}
 					/>
 				))}
 			</div>
+
+			<ChatInput channelName={channelDetail?.name} channelId={roomId} />
 		</div>
 	)
 }
