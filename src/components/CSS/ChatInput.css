@@ -1,0 +1,50 @@
+.chatInput {
+	position: absolute;
+	width: calc(100vw - 260px);
+	bottom: 0;
+	background-color: #fff;
+	color: #ffffff;
+}
+
+.chatInput > div {
+	margin: 20px;
+	background-color: #3f0f40;
+	border: 1px solid #000;
+	border-radius: 10px;
+}
+
+.chatInput form {
+	padding: 10px;
+}
+.chatInput form > input {
+	width: 98%;
+	line-height: 1.2;
+	padding: 5px 10px;
+	font-size: 1.2rem;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+}
+
+.chatInput form > input::placeholder {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.chatInput__style {
+	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.chatInput__style i {
+	padding: 12px;
+}
+.chatInput__style i:hover {
+	background-color: #6b196b;
+}
+.chatInput__styleFormatter i:first-of-type {
+	border-right: 1px solid rgba(255, 255, 255, 0.3);
+	margin-right: 5px;
+}
