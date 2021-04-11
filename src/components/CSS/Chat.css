@@ -1,15 +1,22 @@
 .chat {
 	flex: 1;
-	overflow-y: scroll;
-	padding-bottom: 200px;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow-y: auto;
+	margin-bottom: 200px;
+	margin-top: 80px;
 }
 
 .chat__header {
 	display: flex;
+	position: fixed;
+	top: 54.6px;
 	align-items: center;
 	justify-content: space-between;
-	padding: 20px;
+	padding: 25px 20px;
+	background-color: #fff;
 	border: 1px solid rgba(148, 148, 148, 0.363);
+	width: calc(100vw - 314.4px);
 }
 
 .chat__headerLeft > h4 > i {
@@ -25,4 +32,32 @@
 .chat__headerRight > p > i {
 	margin-right: 5px;
 	font-size: 16px;
+}
+
+.chat__messages {
+	display: flex;
+	flex-direction: column;
+}
+
+.chat__ofTheDay {
+	display: flex;
+	flex-direction: column;
+}
+
+.chat__today {
+	display: flex;
+	align-items: center;
+}
+
+.chat__today hr {
+	flex: 1;
+	border: none;
+	border-top: 1px solid rgba(148, 148, 148, 0.363);
+}
+
+.chat__today button {
+	padding: 5px 20px;
+	border: 1px solid rgba(148, 148, 148, 0.363);
+	border-radius: 15px;
+	background-color: #fff;
 }

@@ -10,6 +10,32 @@ function Chat() {
 	const [channelDetail, setChannelDetail] = useState(null)
 	const [messages, setMessages] = useState(null)
 
+	const messagesByDate = (messages) => {
+		let obj = {}
+
+		messages?.map((message) => {
+			let keyExists = false
+			const dateStr = new Date(message.time?.toDate()).toDateString()
+			// const dateStr = date.replaceAll(' ', '')
+
+			// Checking if the key with the string equal to dateStr exists
+			// if so keyExists willbe set to true
+			Object.keys(obj).map((key) => {
+				if (key === dateStr) keyExists = true
+				return keyExists
+			})
+
+			// Updating obj based on keyExists
+			if (keyExists) obj[dateStr] = [...obj[dateStr], message]
+			else obj = { ...obj, [dateStr]: [message] }
+
+			return []
+		})
+		// Converting obj to array based on its key
+		const newMessages = Object.entries(obj)
+		return newMessages
+	}
+
 	useEffect(() => {
 		if (roomId) {
 			db.collection('room')
@@ -23,10 +49,17 @@ function Chat() {
 				.collection('messages')
 				.orderBy('time', 'asc')
 				.onSnapshot((snapshot) => {
-					setMessages(snapshot.docs.map((doc) => doc.data()))
+					setMessages(
+						snapshot.docs.map((doc) => {
+							return doc.data()
+						})
+					)
 				})
 		}
 	}, [roomId])
+
+	const newMessages = messagesByDate(messages)
+
 	return (
 		<div className='chat'>
 			<div className='chat__header'>
@@ -44,15 +77,27 @@ function Chat() {
 			</div>
 
 			<div className='chat__messages'>
-				{messages?.map(({ message, user, userImage, time }) => (
-					<Message
-						key={time}
-						message={message}
-						user={user}
-						userImage={userImage}
-						time={time}
-					/>
-				))}
+				{newMessages.map((messagesOfTheDay) => {
+					return (
+						<div className='chat__ofTheDay' key={messagesOfTheDay[0]}>
+							<div className='chat__today'>
+								<hr />
+								<button>{messagesOfTheDay[0]}</button>
+								<hr />
+							</div>
+
+							{messagesOfTheDay[1].map(({ message, user, userImage, time }) => (
+								<Message
+									key={time}
+									message={message}
+									user={user}
+									userImage={userImage}
+									time={time}
+								/>
+							))}
+						</div>
+					)
+				})}
 			</div>
 
 			<ChatInput channelName={channelDetail?.name} channelId={roomId} />

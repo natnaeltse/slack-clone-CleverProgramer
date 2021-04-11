@@ -2,6 +2,9 @@
 
 # files
 package-lock.json
+.firebase/
+.firebaserc
+firebase.json
 
 # dependencies
 /node_modules

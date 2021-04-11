@@ -4,7 +4,6 @@ import { useStateValue } from '../context'
 
 function Header() {
 	const [{ user }] = useStateValue()
-
 	return (
 		<div className='header'>
 			<div className='header__left'>

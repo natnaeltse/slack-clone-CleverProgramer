@@ -13,10 +13,28 @@ function SidebarOption({ icon, title, id }) {
 	}
 
 	const addChannel = (e) => {
+		let notExist = true
 		e.stopPropagation()
-		const channelName = prompt('Please enter the channel name to be created')
+		let channelName = prompt('Please enter the channel name to be created')
 		if (channelName) {
-			db.collection('room').add({ name: channelName })
+			db.collection('room')
+				.get()
+				.then((res) => {
+					res.docs.map((doc) => {
+						if (doc.data().name === channelName.toLowerCase()) {
+							notExist = !notExist
+						}
+						return notExist
+					})
+
+					if (notExist) {
+						return db
+							.collection('room')
+							.add({ name: channelName.toLowerCase() })
+					} else {
+						alert('This channel name already exists')
+					}
+				})
 		}
 	}
 
